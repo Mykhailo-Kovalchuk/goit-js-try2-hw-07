@@ -17,9 +17,9 @@ const markup = galleryItems
 
 gallery.insertAdjacentHTML("afterbegin", markup);
 
-gallery.addEventListener("click", (event) => {
-  event.preventDefault();
-});
+// gallery.addEventListener("click", (event) => {
+//   event.preventDefault();
+// }); Це зайве, бо згідно документації, бібліотека SimpleLightbox сама блокує поведінку завантаження фото (Download: false)
 
 const options = {
   captionsData: "alt",

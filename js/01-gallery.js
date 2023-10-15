@@ -26,26 +26,32 @@ const galleryMarkup = galleryItems.map(({ preview, original, description }) => {
 }).join('');
 gallery.innerHTML = galleryMarkup;
 
-// Функція відкриття
+let instance;
+
+// Функція відкриття модалки
 function modalOpen (event) {
     event.preventDefault();
 
     if (event.target.classList.contains('gallery__image')) {
         const originalImage = event.target.dataset.source;
 
-        const instance = basicLightbox.create(`
+        instance = basicLightbox.create(`
         <img src="${originalImage}" width="800" height="600">
     `)
     
     instance.show()
-
-    gallery.addEventListener('keydown', (event) => {//Закриття кнопкою ESC
-        if (event.code === "Escape") {
-            instance.close()}
-
-    })
+    gallery.addEventListener('keydown', removeEscListener);
     }
 }
+
+// Закриття і вдалення слухача ESC
+function removeEscListener (event) {
+  
+  if (event.code === "Escape") {
+    instance.close(() => gallery.removeEventListener('keydown', removeEscListener)); }
+}
+
+// Слухач і виклик модалки
 gallery.addEventListener('click', modalOpen);
 
 
